@@ -76,7 +76,7 @@ adicionaTweet(e){
 
                             {this.state.tweets.map((novoTweet) =>{
                             
-                            return <Tweet texto={novoTweet} />
+                            return <Tweet key={novoTweet} texto={novoTweet} />
                             }
                             )}
                                 
