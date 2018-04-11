@@ -11,9 +11,14 @@ import './assets/css/notificacao.css'
 
 import './assets/css/novoTweet.css'
 
+import { BrowserRouter } from 'react-router-dom'
+import Roteamento from './routes'
+import Home from './pages/Home';
 
 
-import App from './App';
-
-
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(
+    <BrowserRouter>
+        <Roteamento />
+    </BrowserRouter>
+    ,
+    document.getElementById('root'));
