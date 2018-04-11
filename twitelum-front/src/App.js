@@ -10,8 +10,24 @@ class App extends Component {
 constructor(){
     super()
     this.state={
-        novoTweet: ''
+        novoTweet: '',
+        tweets: []
     }
+
+    this.adicionaTweet = this.adicionaTweet.bind(this)
+}
+
+adicionaTweet(e){
+    e.preventDefault()
+
+    const novoTweet = this.state.novoTweet
+    //const tweets = this.state.tweets
+
+    this.setState({
+        tweets:[novoTweet, ...this.state.tweets]
+    })
+   
+    
 }
 
     render() {
@@ -23,7 +39,7 @@ constructor(){
                 <div className="container">
                     <Dashboard>
                         <Widget>
-                            <form className="novoTweet">
+                            <form className="novoTweet" onSubmit={this.adicionaTweet}>
                                 <div className="novoTweet__editorArea">
                                     <span
                                      className={
@@ -35,7 +51,14 @@ constructor(){
                                          { this.state.novoTweet.length }/140</span>
                                     <textarea className="novoTweet__editor" 
                                     value={ this.state.novoTweet}
-                                    onChange={ (event) => this.setState({ novoTweet: event.target.value})}
+                                    onChange={ 
+                                        (event) => {
+                                            this.setState({
+                                                 novoTweet: event.target.value
+                                                })
+                                           
+                                            
+                                            }}
                                     placeholder="O que está acontecendo?"></textarea>
                                 </div>
                                 <button type="submit" className="novoTweet__envia"
@@ -50,7 +73,13 @@ constructor(){
                     <Dashboard posicao="centro">
                         <Widget>
                             <div className="tweetsArea">
-                                <Tweet />
+
+                            {this.state.tweets.map((novoTweet) =>{
+                            
+                            return <Tweet texto={novoTweet} />
+                            }
+                            )}
+                                
                             </div>
                         </Widget>
                     </Dashboard>
