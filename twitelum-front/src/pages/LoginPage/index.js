@@ -5,6 +5,9 @@ import './loginPage.css'
 
 
 class LoginPage extends Component {
+    state={
+        erro:''
+    }
 
     state={
         erro: ''
@@ -37,12 +40,23 @@ class LoginPage extends Component {
                 this.props.history.push('/')
             })
             .catch((error) => {
+<<<<<<< HEAD
                 error.json().then((res) =>{
                     this.setState({
                         erro: res.message
                     })
 
                    // console.log(res)
+=======
+                error.json()
+                .then((res) =>{
+                    this.setState({
+                        erro: res.message
+                    })
+                    // console.log(res.message);
+                    // const erro = res.message   
+                    // console.log(erro)                 
+>>>>>>> a4ae3562fbb3ec3e35f374ad150841c39789d254
                 })
                
             })
@@ -77,11 +91,20 @@ class LoginPage extends Component {
                                     name="senha"
                                     ref={(inputSenha) => this.inputSenha = inputSenha} />
                             </div>
+<<<<<<< HEAD
                             {this.state.erro && <div className="loginPage__errorBox">
                                 {this.state.erro}!
                             </div>}
+=======
+                            {this.state.erro?
+                            <div className="loginPage__errorBox">
+                            {this.state.erro}!
+                        </div>
+                        : false
+                            }
+>>>>>>> a4ae3562fbb3ec3e35f374ad150841c39789d254
                             {/* <div className="loginPage__errorBox">
-                                Mensagem de erro!
+                                {this.state.erro}
                             </div> */}
                             <div className="loginPage__inputWrap">
                                 <button className="loginPage__btnLogin" type="submit">
