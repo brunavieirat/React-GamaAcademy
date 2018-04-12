@@ -6,6 +6,10 @@ import './loginPage.css'
 
 class LoginPage extends Component {
 
+    state={
+        erro: ''
+    }
+
     fazLogin = (e) => {
         e.preventDefault()
         // const login= this.inputLogin.value
@@ -34,7 +38,11 @@ class LoginPage extends Component {
             })
             .catch((error) => {
                 error.json().then((res) =>{
-                    console.log(res)
+                    this.setState({
+                        erro: res.message
+                    })
+
+                   // console.log(res)
                 })
                
             })
@@ -69,6 +77,9 @@ class LoginPage extends Component {
                                     name="senha"
                                     ref={(inputSenha) => this.inputSenha = inputSenha} />
                             </div>
+                            {this.state.erro && <div className="loginPage__errorBox">
+                                {this.state.erro}!
+                            </div>}
                             {/* <div className="loginPage__errorBox">
                                 Mensagem de erro!
                             </div> */}

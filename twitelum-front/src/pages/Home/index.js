@@ -65,7 +65,7 @@ adicionaTweet(e){
                                     placeholder="O que está acontecendo?"></textarea>
                                 </div>
                                 <button type="submit" className="novoTweet__envia"
-                                disabled={ this.state.novoTweet.length > 140 ? true : false}
+                                disabled={ this.state.novoTweet.length > 140 || this.state.novoTweet === ''? true : false}
                                 >Tweetar</button>
                             </form>
                         </Widget>
