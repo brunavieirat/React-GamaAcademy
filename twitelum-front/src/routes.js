@@ -10,16 +10,20 @@ class PrivateRoute extends Component {
 
         if(localStorage.getItem('TOKEN')){
             return true
+            
         }
         return false
     }
 
     render(){
+        const Component = this.props.component
+        const props = this.props
 
         if(this.estaAutenticado()){                    
 
         return (
-            <Route {...this.props} />
+            <Route render={() =><Component {...props} /> }/>
+                
         )        
     }
         return (<Redirect to = "/login" />)
