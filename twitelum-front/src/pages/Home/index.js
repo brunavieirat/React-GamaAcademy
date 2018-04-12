@@ -5,7 +5,7 @@ import Dashboard from '../../components/Dashboard'
 import Widget from '../../components/Widget'
 import TrendsArea from '../../components/TrendsArea'
 import Tweet from '../../components/Tweet'
-import Login from '../LoginPage'
+
 
 class Home extends Component {
 constructor(){
@@ -18,6 +18,14 @@ constructor(){
     this.adicionaTweet = this.adicionaTweet.bind(this)
 }
 
+pegaValorInput=(event) => {
+    this.setState({
+         novoTweet: event.target.value
+        })
+   
+    
+    }
+
 adicionaTweet(e){
     e.preventDefault()
 
@@ -25,7 +33,8 @@ adicionaTweet(e){
     //const tweets = this.state.tweets
 
     this.setState({
-        tweets:[novoTweet, ...this.state.tweets]
+        tweets:[novoTweet, ...this.state.tweets],
+        novoTweet: ''
     })
    
     
@@ -52,14 +61,7 @@ adicionaTweet(e){
                                          { this.state.novoTweet.length }/140</span>
                                     <textarea className="novoTweet__editor" 
                                     value={ this.state.novoTweet}
-                                    onChange={ 
-                                        (event) => {
-                                            this.setState({
-                                                 novoTweet: event.target.value
-                                                })
-                                           
-                                            
-                                            }}
+                                    onChange={ this.pegaValorInput }
                                     placeholder="O que está acontecendo?"></textarea>
                                 </div>
                                 <button type="submit" className="novoTweet__envia"
@@ -74,6 +76,12 @@ adicionaTweet(e){
                     <Dashboard posicao="centro">
                         <Widget>
                             <div className="tweetsArea">
+                           
+                            
+                            {this.state.tweets.length===0 ?
+                                <div> Compartilhe seu primeiro Tweet </div> : false}
+                            
+                          
 
                             {this.state.tweets.map((novoTweet) =>{
                             

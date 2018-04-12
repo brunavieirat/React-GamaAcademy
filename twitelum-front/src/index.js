@@ -13,7 +13,7 @@ import './assets/css/novoTweet.css'
 
 import { BrowserRouter } from 'react-router-dom'
 import Roteamento from './routes'
-import Home from './pages/Home';
+
 
 
 ReactDOM.render(

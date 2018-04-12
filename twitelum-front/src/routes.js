@@ -8,10 +8,10 @@ const Roteamento = () => {
     return (
 
         <Switch>
-            <Route path="/" component={ Home } exact />
-            <Route path="/login" component={ Login } />
-
-            </Switch>
+            <Route path="/" component={Home} exact />
+            <Route path="/login" component={Login} />
+            <Route path="*" component={() => (<div> Page 404 Not Found  </div>)} />
+        </Switch>
     )
 }
 export default Roteamento
