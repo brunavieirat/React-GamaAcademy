@@ -9,6 +9,8 @@ class LoginPage extends Component {
         erro:''
     }
 
+   
+
     fazLogin = (e) => {
         e.preventDefault()
         // const login= this.inputLogin.value
@@ -25,6 +27,7 @@ class LoginPage extends Component {
             body: JSON.stringify(dadosLogin)
         })
             .then((res) => {
+              //  console.log(res)
                 if (!res.ok) {
                     throw res;
                    
@@ -33,15 +36,17 @@ class LoginPage extends Component {
             })
             .then((resJSON) => {
                 localStorage.setItem('TOKEN', resJSON.token)
+
                 localStorage.setItem('LOGIN', dadosLogin.login)
+
                 this.props.history.push('/')
             })
             .catch((error) => {
-                error.json()
-                .then((res) =>{
+                error.json().then((res) =>{
                     this.setState({
                         erro: res.message
                     })
+
                     // console.log(res.message);
                     // const erro = res.message   
                                    
@@ -49,7 +54,7 @@ class LoginPage extends Component {
                
             })
            
-            
+
     }
 
 
@@ -80,6 +85,7 @@ class LoginPage extends Component {
                                     name="senha"
                                     ref={(inputSenha) => this.inputSenha = inputSenha} />
                             </div>
+
                             {this.state.erro &&
                             <div className="loginPage__errorBox">
                             {this.state.erro} !

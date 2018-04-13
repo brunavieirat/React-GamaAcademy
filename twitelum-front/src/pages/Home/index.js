@@ -13,17 +13,28 @@ class Home extends Component {
         this.state = {
             novoTweet: '',
             tweets: [],
-            login: localStorage.getItem('LOGIN'),
-          //  token: localStorage.getItem('TOKEN')
+            login: localStorage.getItem('LOGIN')
         }
 
         this.adicionaTweet = this.adicionaTweet.bind(this)
+    }
+
+    componentDidMount(){
+        fetch(`http://localhost:3001/tweets?X-AUTH-TOKEN=${localStorage.getItem('TOKEN')}`)
+        .then((res) => res.json())
+        .then((tweets) => {
+            this.setState({
+                tweets
+            })
+        })
+
     }
 
     pegaValorInput = (event) => {
         this.setState({
             novoTweet: event.target.value
         })
+
          }
 
     adicionaTweet(e) {
@@ -50,15 +61,16 @@ class Home extends Component {
                     })
 
             }  
-   
-    
+      
 
 
     render() {
         return (
             <Fragment>
                 <Cabecalho>
-                    <NavMenu usuario={this.state.login} />
+
+                    <NavMenu usuario="" login={this.state.login}  />
+
                 </Cabecalho>
                 <div className="container">
                     <Dashboard>
@@ -79,7 +91,9 @@ class Home extends Component {
                                         placeholder="O que está acontecendo?"></textarea>
                                 </div>
                                 <button type="submit" className="novoTweet__envia"
-                                    disabled={this.state.novoTweet.length > 140 ? true : false}
+
+                                    disabled={this.state.novoTweet.length > 140 || this.state.novoTweet === '' ? true : false}
+
                                 >Tweetar</button>
                             </form>
                         </Widget>
@@ -98,7 +112,7 @@ class Home extends Component {
 
 
                                 {this.state.tweets.map((tweetInfo) => {
-                                    console.log(tweetInfo)
+
                                     return <Tweet
                                         key={tweetInfo._id}
                                         texto={tweetInfo.conteudo}
