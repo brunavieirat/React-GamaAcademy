@@ -6,12 +6,7 @@ class Tweet extends Component {
         super(props)
 
 
-    componentDidMount(){
-        console.log(this.props)
-    }
-
-
-        this.state={
+            this.state={
             likeado : props.tweetInfo.likeado,
             totalLikes: props.tweetInfo.totalLikes
         }
@@ -34,11 +29,7 @@ class Tweet extends Component {
 
 
     render() {
-<<<<<<< HEAD
-     //   console.log(this.state.likeado)
-=======
         const {tweetInfo} = this.props
->>>>>>> 45e42c77f55a637491000101ad8637db657f2a80
         return (
             
             <article className="tweet">
