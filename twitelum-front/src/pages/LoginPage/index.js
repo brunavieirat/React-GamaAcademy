@@ -9,9 +9,7 @@ class LoginPage extends Component {
         erro:''
     }
 
-    state={
-        erro: ''
-    }
+   
 
     fazLogin = (e) => {
         e.preventDefault()
@@ -29,6 +27,7 @@ class LoginPage extends Component {
             body: JSON.stringify(dadosLogin)
         })
             .then((res) => {
+              //  console.log(res)
                 if (!res.ok) {
                     throw res;
                    
@@ -37,6 +36,7 @@ class LoginPage extends Component {
             })
             .then((resJSON) => {
                 localStorage.setItem('TOKEN', resJSON.token)
+               // console.log(resJSON)
                 this.props.history.push('/')
             })
             .catch((error) => {
