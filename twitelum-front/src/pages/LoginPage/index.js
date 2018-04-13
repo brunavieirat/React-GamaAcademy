@@ -36,6 +36,7 @@ class LoginPage extends Component {
             })
             .then((resJSON) => {
                 localStorage.setItem('TOKEN', resJSON.token)
+                localStorage.setItem('LOGIN', this.inputLogin.value)
                // console.log(resJSON)
                 this.props.history.push('/')
             })
@@ -49,6 +50,7 @@ class LoginPage extends Component {
                 })
                
             })
+            console.log(localStorage.LOGIN)
 
     }
 

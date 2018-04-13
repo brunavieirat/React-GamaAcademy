@@ -12,10 +12,21 @@ class Home extends Component {
         super()
         this.state = {
             novoTweet: '',
-            tweets: []
+            tweets: [],
+            login: localStorage.getItem('LOGIN')
         }
 
         this.adicionaTweet = this.adicionaTweet.bind(this)
+    }
+
+    componentDidMount(){
+        fetch(`http://localhost:3001/tweets?X-AUTH-TOKEN=${localStorage.getItem('TOKEN')}`)
+        .then((res) => res.json())
+        .then((tweets) => {
+            this.setState({
+                tweets
+            })
+        })
     }
 
     pegaValorInput = (event) => {
@@ -33,6 +44,7 @@ class Home extends Component {
         //const tweets = this.state.tweets
         const token = localStorage.getItem('TOKEN')
 
+
         fetch(`http://localhost:3001/tweets?X-AUTH-TOKEN=${token}`,
             {
                 method: 'POST',
@@ -46,6 +58,7 @@ class Home extends Component {
                 })
 
             })
+            console.log(this.state)
 
     }
 
@@ -54,7 +67,7 @@ class Home extends Component {
         return (
             <Fragment>
                 <Cabecalho>
-                    <NavMenu usuario=""  />
+                    <NavMenu usuario="" login={this.state.login}  />
                 </Cabecalho>
                 <div className="container">
                     <Dashboard>

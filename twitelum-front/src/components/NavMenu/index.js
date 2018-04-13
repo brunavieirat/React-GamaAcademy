@@ -12,7 +12,7 @@ class NavMenu extends Component {
                 <li className="navMenu__item">
                     <a className="navMenu__link">
                         Bem vindo(a): <br />
-                        <strong>{ this.props.usuario }</strong>
+                        <strong>@{ this.props.login }</strong>
                     </a>
                 </li>
                 <li className="navMenu__item">
@@ -22,7 +22,10 @@ class NavMenu extends Component {
                     <a className="navMenu__link">Hashtags</a>
                 </li>
                 <li className="navMenu__item">
-                    <Link to="/login" className="navMenu__link">Logout</Link>
+                    <Link to="/login" className="navMenu__link" onClick={() => {
+                        localStorage.setItem('TOKEN', '')
+                        localStorage.setItem('LOGIN', '')
+                    } }>Logout</Link>
                 </li>
                 </ul>
             </nav>
