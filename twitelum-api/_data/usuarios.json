@@ -1,12 +1,20 @@
 [
     {
+        "login": "brunavieirat",
+        "nome": "Bruna",
+        "sobrenome": "Vieira",
+        "foto": "https://avatars2.githubusercontent.com/u/32556458?s=460&v=4",
+        "email": "mario.souto@caelum.com.br",
+        "senha": "123456"
+    },
+    {
         "login": "omariosouto",
         "nome": "Mario",
         "sobrenome": "Souto",
         "foto": "https://www.caelum.com.br/imagens/instrutores/fotos/mario-souto-120.jpg",
         "email": "mario.souto@caelum.com.br",
         "senha": "123456"
-    },
+    },  
     {
         "login": "artdiniz",
         "nome": "Artur",
