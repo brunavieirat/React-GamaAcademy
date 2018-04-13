@@ -16,6 +16,39 @@
         "senha": "123456"
     },  
     {
+        "login": "naty",
+        "nome": "Nathalia",
+        "sobrenome": "Natasha",
+        "foto": "https://avatars2.githubusercontent.com/u/28115304?s=460&v=4",
+        "email": "",
+        "senha": "123456"
+    },
+    {
+        "login": "brunavieirat",
+        "nome": "Bruna",
+        "sobrenome": "Vieira",
+        "foto": "https://avatars2.githubusercontent.com/u/32556458?s=460&v=4",
+        "email": "",
+        "senha": "123456"
+    },
+    {
+        "login": "abmoraes",
+        "nome": "Amanda",
+        "sobrenome": "Moares",
+        "foto": "https://avatars2.githubusercontent.com/u/32555917?s=460&v=4",
+        "email": "",
+        "senha": "123456"
+    },
+   
+    {
+        "login": "renatinha",
+        "nome": "Renatinha",
+        "sobrenome": "Silva",
+        "foto": "https://media.licdn.com/dms/image/C5603AQGvLcjjCh1YSw/profile-displayphoto-shrink_800_800/0?e=1528815600&v=beta&t=zhdRpQX6O_X6RDZSU_X5DNVba-MwY4OAdR1u2VK0avk",
+        "email": "",
+        "senha": "123456"
+    },
+    {
         "login": "artdiniz",
         "nome": "Artur",
         "sobrenome": "Diniz",
@@ -23,6 +56,7 @@
         "email": "artur.diniz@caelum.com.br",
         "senha": "123456"
     },
+
     {
         "login": "marcobrunobr",
         "nome": "Marco",

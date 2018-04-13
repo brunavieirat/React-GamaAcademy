@@ -27,6 +27,7 @@ class Home extends Component {
                 tweets
             })
         })
+
     }
 
     pegaValorInput = (event) => {
@@ -34,40 +35,42 @@ class Home extends Component {
             novoTweet: event.target.value
         })
 
-
-    }
+         }
 
     adicionaTweet(e) {
         e.preventDefault()
-
-        const novoTweet = this.state.novoTweet
-        //const tweets = this.state.tweets
+     
+     const novoTweet = this.state.novoTweet
+       
         const token = localStorage.getItem('TOKEN')
-
 
         fetch(`http://localhost:3001/tweets?X-AUTH-TOKEN=${token}`,
             {
                 method: 'POST',
                 body: JSON.stringify({ conteudo: novoTweet })
             })
-            .then(res => res.json())
-            .then((tweetPronto) => {
-                this.setState({
-                    tweets: [tweetPronto, ...this.state.tweets],
-                    novoTweet: ''
-                })
+                    .then(res => res.json())
+                    .then((tweetPronto) => {
+                        
+                        this.setState({
+                            tweets: [tweetPronto, ...this.state.tweets],
+                            
+                        })
+                       // console.log(this.state)
 
-            })
-            console.log(this.state)
+                    })
 
-    }
+            }  
+      
 
 
     render() {
         return (
             <Fragment>
                 <Cabecalho>
+
                     <NavMenu usuario="" login={this.state.login}  />
+
                 </Cabecalho>
                 <div className="container">
                     <Dashboard>
@@ -88,7 +91,9 @@ class Home extends Component {
                                         placeholder="O que está acontecendo?"></textarea>
                                 </div>
                                 <button type="submit" className="novoTweet__envia"
+
                                     disabled={this.state.novoTweet.length > 140 || this.state.novoTweet === '' ? true : false}
+
                                 >Tweetar</button>
                             </form>
                         </Widget>
@@ -112,6 +117,7 @@ class Home extends Component {
                                         key={tweetInfo._id}
                                         texto={tweetInfo.conteudo}
                                         tweetInfo={tweetInfo}
+
                                     />
                                 }
                                 )}

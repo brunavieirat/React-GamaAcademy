@@ -36,8 +36,9 @@ class LoginPage extends Component {
             })
             .then((resJSON) => {
                 localStorage.setItem('TOKEN', resJSON.token)
-                localStorage.setItem('LOGIN', this.inputLogin.value)
-               // console.log(resJSON)
+
+                localStorage.setItem('LOGIN', dadosLogin.login)
+
                 this.props.history.push('/')
             })
             .catch((error) => {
@@ -46,11 +47,13 @@ class LoginPage extends Component {
                         erro: res.message
                     })
 
-                   // console.log(res)
+                    // console.log(res.message);
+                    // const erro = res.message   
+                                   
                 })
                
             })
-            console.log(localStorage.LOGIN)
+           
 
     }
 
@@ -82,9 +85,12 @@ class LoginPage extends Component {
                                     name="senha"
                                     ref={(inputSenha) => this.inputSenha = inputSenha} />
                             </div>
-                            {this.state.erro && <div className="loginPage__errorBox">
-                                {this.state.erro}!
-                            </div>}
+
+                            {this.state.erro &&
+                            <div className="loginPage__errorBox">
+                            {this.state.erro} !
+                        </div>
+                           }
                             {/* <div className="loginPage__errorBox">
                                 {this.state.erro}
                             </div> */}
