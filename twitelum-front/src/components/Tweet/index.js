@@ -10,10 +10,26 @@ class Tweet extends Component {
             totalLikes: props.tweetInfo.totalLikes
         }
     }
+    handleLike= (idTweet) =>{
+    
+       const {likeado, totalLikes} = this.state
+        this.setState({
+            likeado: !likeado,
+            totalLikes: likeado ? totalLikes-1 : totalLikes+1
+        })
+
+        fetch(`http://localhost:3001/tweets/${idTweet}/like?X-AUTH-TOKEN=${localStorage.getItem('TOKEN')}`,
+    {method: 'POST'})
+    .then( res => res.json())
+    //.then(res => console.log(res))
+       // console.log(this.state.likeado)
+    }
     
 
     render() {
+     //   console.log(this.state.likeado)
         return (
+            
             <article className="tweet">
                 <div className="tweet__cabecalho">
                     <img className="tweet__fotoUsuario" src={this.props.tweetInfo.usuario.foto} alt="" />
@@ -25,7 +41,11 @@ class Tweet extends Component {
                 </p>
                
                 <footer className="tweet__footer">
-                    <button className="btn btn--clean">
+                    <button className="btn btn--clean"
+                    onClick={(e) => {
+                        
+                    this.handleLike(this.props.tweetInfo._id)}}
+                    >
                         <svg className={`icon icon--small iconHeart
                                         ${this.state.likeado ? 'iconHeart--active' : ''}`}
                          xmlns="http://www.w3.org/2000/svg" viewBox="0 0 47.5 47.5">
@@ -40,6 +60,11 @@ class Tweet extends Component {
                         </svg>
                        {this.state.totalLikes}
                     </button>
+                        {this.props.tweetInfo.removivel &&
+                    <button className="btn btn--blue btn--remove">
+                            X
+                        </button>
+                        }
                 </footer>
             </article>
         )
