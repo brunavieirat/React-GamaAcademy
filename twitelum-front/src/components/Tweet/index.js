@@ -5,8 +5,6 @@ import PropTypes from 'prop-types'
 class Tweet extends Component {
     constructor(props){
         super(props)
-
-
             this.state={
             likeado : props.tweetInfo.likeado,
             totalLikes: props.tweetInfo.totalLikes
@@ -34,7 +32,7 @@ class Tweet extends Component {
         const {tweetInfo} = this.props
         return (
             
-            <article className="tweet">
+            <article className="tweet" onClick={this.props.handleModal }>
                 <div className="tweet__cabecalho">
 
                     <img className="tweet__fotoUsuario" src={tweetInfo.usuario.foto} alt="" />

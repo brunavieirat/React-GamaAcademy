@@ -13,20 +13,21 @@ class Home extends Component {
         this.state = {
             novoTweet: '',
             tweets: [],
-            login: localStorage.getItem('LOGIN')
+            login: localStorage.getItem('LOGIN'),
+            tweetAtivo: {}
         }
 
         this.adicionaTweet = this.adicionaTweet.bind(this)
     }
 
-    componentDidMount(){
+    componentDidMount() {
         fetch(`http://localhost:3001/tweets?X-AUTH-TOKEN=${localStorage.getItem('TOKEN')}`)
-        .then((res) => res.json())
-        .then((tweets) => {
-            this.setState({
-                tweets
+            .then((res) => res.json())
+            .then((tweets) => {
+                this.setState({
+                    tweets
+                })
             })
-        })
 
     }
 
@@ -35,13 +36,13 @@ class Home extends Component {
             novoTweet: event.target.value
         })
 
-         }
+    }
 
     adicionaTweet(e) {
         e.preventDefault()
-     
-     const novoTweet = this.state.novoTweet
-       
+
+        const novoTweet = this.state.novoTweet
+
         const token = localStorage.getItem('TOKEN')
 
         fetch(`http://localhost:3001/tweets?X-AUTH-TOKEN=${token}`,
@@ -49,50 +50,62 @@ class Home extends Component {
                 method: 'POST',
                 body: JSON.stringify({ conteudo: novoTweet })
             })
-                    .then(res => res.json())
-                    .then((tweetPronto) => {
-                        
-                        this.setState({
-                            tweets: [tweetPronto, ...this.state.tweets],
-                            novoTweet: ''
-                            
-                        })
-                       // console.log(this.state)
+            .then(res => res.json())
+            .then((tweetPronto) => {
 
-                    })
+                this.setState({
+                    tweets: [tweetPronto, ...this.state.tweets],
+                    novoTweet: ''
 
-            }  
-      
-            removeTweet = (idTweet) =>{
-
-                const tweetsAtualizados = this.state.tweets.filter((tweetsAtual)=>{
-                    return tweetsAtual._id !== idTweet
                 })
+                // console.log(this.state)
 
+            })
+
+    }
+
+    removeTweet = (idTweet) => {
+
+        const tweetsAtualizados = this.state.tweets.filter((tweetsAtual) => {
+            return tweetsAtual._id !== idTweet
+        })
+
+        this.setState({
+            tweets: tweetsAtualizados
+        })
+
+        fetch(`http://localhost:3001/tweets/${idTweet}?X-AUTH-TOKEN=${localStorage.getItem('TOKEN')}`,
+            {
+                method: 'DELETE'
+            })
+            .then((res) => res.json())
+            .then((resPronto) => {
+                const tweetsAtualizados = this
+                    .state.tweets.filter((tweetAtual) => tweetAtual._id !== idTweet)
                 this.setState({
                     tweets: tweetsAtualizados
                 })
+            })
+    }
 
-                fetch(`http://localhost:3001/tweets/${idTweet}?X-AUTH-TOKEN=${localStorage.getItem('TOKEN')}`,
-                {
-                method: 'DELETE'
-                })
-                .then((res) => res.json())
-                .then((resPronto) => {
-                    const tweetsAtualizados = this
-                    .state.tweets.filter((tweetAtual) => tweetAtual._id !== idTweet)
-                    this.setState({
-                        tweets: tweetsAtualizados
-                    })
-                })
-            }
+    abreModal = (idTweet) => {
+        //  console.log('id', idTweet)
+        const tweetAtivo = this.state
+            .tweets
+            .find((tweetAtual) => tweetAtual._id === idTweet)
+    //    console.log(tweetAtivo)
+       this.setState({
+            tweetAtivo: tweetAtivo
+        })
+
+    }
 
     render() {
         return (
             <Fragment>
                 <Cabecalho>
 
-                    <NavMenu usuario="" login={this.state.login}  />
+                    <NavMenu usuario="" login={this.state.login} />
 
                 </Cabecalho>
                 <div className="container">
@@ -140,7 +153,8 @@ class Home extends Component {
                                         key={tweetInfo._id}
                                         texto={tweetInfo.conteudo}
                                         tweetInfo={tweetInfo}
-                                        handleRemove = {()=>{this.removeTweet(tweetInfo._id)}}
+                                        handleRemove={() => this.removeTweet(tweetInfo._id)}
+                                        handleModal={() => this.abreModal(tweetInfo._id)}
 
                                     />
                                 }
@@ -150,6 +164,15 @@ class Home extends Component {
                         </Widget>
                     </Dashboard>
                 </div>
+
+ {this.state.tweetAtivo._id &&
+                            <Tweet
+                            texto={this.state.tweetAtivo.conteudo}
+                                        tweetInfo={this.state.tweetAtivo}
+                                        handleRemove = {()=>{this.removeTweet(this.state.tweetAtivo._id)}}
+                        
+                        />}
+
             </Fragment>
         );
     }
