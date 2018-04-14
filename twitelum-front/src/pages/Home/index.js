@@ -54,6 +54,7 @@ class Home extends Component {
                         
                         this.setState({
                             tweets: [tweetPronto, ...this.state.tweets],
+                            novoTweet: ''
                             
                         })
                        // console.log(this.state)
@@ -62,7 +63,29 @@ class Home extends Component {
 
             }  
       
+            removeTweet = (idTweet) =>{
 
+                const tweetsAtualizados = this.state.tweets.filter((tweetsAtual)=>{
+                    return tweetsAtual._id !== idTweet
+                })
+
+                this.setState({
+                    tweets: tweetsAtualizados
+                })
+
+                fetch(`http://localhost:3001/tweets/${idTweet}?X-AUTH-TOKEN=${localStorage.getItem('TOKEN')}`,
+                {
+                method: 'DELETE'
+                })
+                .then((res) => res.json())
+                .then((resPronto) => {
+                    const tweetsAtualizados = this
+                    .state.tweets.filter((tweetAtual) => tweetAtual._id !== idTweet)
+                    this.setState({
+                        tweets: tweetsAtualizados
+                    })
+                })
+            }
 
     render() {
         return (
@@ -117,6 +140,7 @@ class Home extends Component {
                                         key={tweetInfo._id}
                                         texto={tweetInfo.conteudo}
                                         tweetInfo={tweetInfo}
+                                        handleRemove = {()=>{this.removeTweet(tweetInfo._id)}}
 
                                     />
                                 }

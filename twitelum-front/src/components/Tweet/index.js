@@ -26,6 +26,7 @@ class Tweet extends Component {
        // console.log(this.state.likeado)
     }
     
+   
 
 
     render() {
@@ -67,7 +68,9 @@ class Tweet extends Component {
 
                     </button>
                         {this.props.tweetInfo.removivel &&
-                    <button className="btn btn--blue btn--remove">
+                    <button 
+                    onClick = {this.props.handleRemove}
+                    className="btn btn--blue btn--remove">
                             X
                         </button>
                         }
