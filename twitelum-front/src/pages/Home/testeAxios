@@ -1,0 +1,11 @@
+function axios(url) {
+    return {
+        get: function() {
+            return fetch(url).then(res => res.json())
+        }
+    }
+}
+
+
+axios(url).get() 
+          .then()
