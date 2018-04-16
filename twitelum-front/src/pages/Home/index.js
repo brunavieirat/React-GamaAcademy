@@ -5,7 +5,7 @@ import Dashboard from '../../components/Dashboard'
 import Widget from '../../components/Widget'
 import TrendsArea from '../../components/TrendsArea'
 import Tweet from '../../components/Tweet'
-
+import Modal from '../../components/Modal'
 
 class Home extends Component {
     constructor() {
@@ -88,16 +88,28 @@ class Home extends Component {
             })
     }
 
-    abreModal = (idTweet) => {
+    abreModal = (idTweet, event) => {
         //  console.log('id', idTweet)
+        const ignoraModal = event.target.closest('.ignoraModal')
+       // console.log(ignoraModal)
+        if (!ignoraModal){
         const tweetAtivo = this.state
             .tweets
             .find((tweetAtual) => tweetAtual._id === idTweet)
-    //    console.log(tweetAtivo)
-       this.setState({
+        //    console.log(tweetAtivo)
+        this.setState({
             tweetAtivo: tweetAtivo
         })
+    }
+    }
 
+    fechaModal=(event)=>{
+        const isModal = event.target.classList.contains('modal')
+        if(isModal){
+            this.setState({
+                tweetAtivo: {}
+            })
+        }
     }
 
     render() {
@@ -154,7 +166,7 @@ class Home extends Component {
                                         texto={tweetInfo.conteudo}
                                         tweetInfo={tweetInfo}
                                         handleRemove={() => this.removeTweet(tweetInfo._id)}
-                                        handleModal={() => this.abreModal(tweetInfo._id)}
+                                        handleModal={(event) => this.abreModal(tweetInfo._id, event)}
 
                                     />
                                 }
@@ -165,15 +177,20 @@ class Home extends Component {
                     </Dashboard>
                 </div>
 
- {this.state.tweetAtivo._id &&
-                            <Tweet
-                            texto={this.state.tweetAtivo.conteudo}
-                                        tweetInfo={this.state.tweetAtivo}
-                                        handleRemove = {()=>{this.removeTweet(this.state.tweetAtivo._id)}}
-                        
-                        />}
 
-            </Fragment>
+                
+                    <Modal isOpen={this.state.tweetAtivo._id} fechaModal={this.fechaModal}>
+                        <Widget>
+                            <Tweet
+                                texto={this.state.tweetAtivo.conteudo || ''}
+                                tweetInfo={this.state.tweetAtivo}
+                                handleRemove={() => { this.removeTweet(this.state.tweetAtivo._id) }}
+                            />
+                        </Widget>
+                    </Modal>               
+
+
+            </Fragment >
         );
     }
 }
