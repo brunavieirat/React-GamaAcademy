@@ -7,8 +7,16 @@ import TrendsArea from '../../components/TrendsArea'
 import Tweet from '../../components/Tweet'
 import Modal from '../../components/Modal'
 
+import Proptypes from 'prop-types'
+
 class Home extends Component {
-    constructor() {
+
+   /* static contextTypes = {
+        store: Proptypes.object.isRequired
+    } */
+
+
+    constructor(props) {
         super()
         this.state = {
             novoTweet: '',
@@ -22,10 +30,10 @@ class Home extends Component {
 
     componentWillMount(){
         
-        window.store.subscribe(() => {
+        this.context.store.subscribe(() => {
             console.log('roda qnd tem dispatch')
             this.setState({
-                tweets: window.store.getState()
+                tweets: this.context.store.getState()
             })
         })
     }
@@ -35,7 +43,7 @@ class Home extends Component {
             .then((res) => res.json())
             .then((tweetsServer) => {
 
-                window.store.dispatch({ type: 'CARREGA_TWEETS', tweets: tweetsServer })
+                this.context.store.dispatch({ type: 'CARREGA_TWEETS', tweets: tweetsServer })
                 /* this.setState({
                      tweetsServer
                  })*/
@@ -205,6 +213,11 @@ class Home extends Component {
             </Fragment >
         );
     }
+}
+
+
+Home.contextTypes = {
+    store: Proptypes.object.isRequired
 }
 
 export default Home;

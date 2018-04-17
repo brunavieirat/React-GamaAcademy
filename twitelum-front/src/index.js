@@ -17,11 +17,15 @@ import { BrowserRouter } from 'react-router-dom'
 import Roteamento from './routes'
 
 //Coisas do Redux
-import './store'
+
+import { Provider } from 'react-redux'
+import store from './store'
 
 ReactDOM.render(
-    <BrowserRouter>
-        <Roteamento />
-    </BrowserRouter>
+    <Provider store={store}>
+        <BrowserRouter>
+            <Roteamento />
+        </BrowserRouter>
+    </Provider>
     ,
     document.getElementById('root'));
