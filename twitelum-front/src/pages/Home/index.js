@@ -9,6 +9,8 @@ import Modal from '../../components/Modal'
 
 import Proptypes from 'prop-types'
 
+import * as TweetsAPI from '../../apis/TweetsAPI'
+
 class Home extends Component {
 
    /* static contextTypes = {
@@ -29,7 +31,7 @@ class Home extends Component {
     }
 
     componentWillMount(){
-        
+                
         this.context.store.subscribe(() => {
             console.log('roda qnd tem dispatch')
             this.setState({
@@ -39,15 +41,7 @@ class Home extends Component {
     }
 
     componentDidMount() {
-        fetch(`http://localhost:3001/tweets?X-AUTH-TOKEN=${localStorage.getItem('TOKEN')}`)
-            .then((res) => res.json())
-            .then((tweetsServer) => {
-
-                this.context.store.dispatch({ type: 'CARREGA_TWEETS', tweets: tweetsServer })
-                /* this.setState({
-                     tweetsServer
-                 })*/
-            })
+        this.context.store.dispatch(TweetsAPI.carrega())
 
     }
 
