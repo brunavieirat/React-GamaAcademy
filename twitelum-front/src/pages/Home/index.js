@@ -13,9 +13,9 @@ import * as TweetsAPI from '../../apis/TweetsAPI'
 
 class Home extends Component {
 
-   /* static contextTypes = {
-        store: Proptypes.object.isRequired
-    } */
+    /* static contextTypes = {
+         store: Proptypes.object.isRequired
+     } */
 
 
     constructor(props) {
@@ -30,8 +30,8 @@ class Home extends Component {
         this.adicionaTweet = this.adicionaTweet.bind(this)
     }
 
-    componentWillMount(){
-                
+    componentWillMount() {
+
         this.context.store.subscribe(() => {
             console.log('roda qnd tem dispatch')
             this.setState({
@@ -56,26 +56,14 @@ class Home extends Component {
         e.preventDefault()
 
         const novoTweet = this.state.novoTweet
+        this.context.store.dispatch(TweetsAPI.adiciona(novoTweet))
+        
 
-        const token = localStorage.getItem('TOKEN')
+        this.setState({
+            // tweets: [tweetPronto, ...this.state.tweets],
+            novoTweet: ''
 
-        fetch(`http://localhost:3001/tweets?X-AUTH-TOKEN=${token}`,
-            {
-                method: 'POST',
-                body: JSON.stringify({ conteudo: novoTweet })
-            })
-            .then(res => res.json())
-            .then((tweetPronto) => {
-
-                this.setState({
-                    tweets: [tweetPronto, ...this.state.tweets],
-                    novoTweet: ''
-
-                })
-                // console.log(this.state)
-
-            })
-
+        })
     }
 
     removeTweet = (idTweet) => {

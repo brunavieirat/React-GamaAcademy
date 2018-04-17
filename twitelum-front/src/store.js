@@ -12,6 +12,14 @@ function tweetsReducer(state = [], action= {}){
         return novoEstado
     }
 
+    if(action.type === 'ADICIONA_TWEET'){
+        
+        console.warn('oq ta acontecendo', action.type, state)
+
+        const novoEstado = [action.novoTweet, ...state]
+        return novoEstado
+    }
+
     return state
 
 }
