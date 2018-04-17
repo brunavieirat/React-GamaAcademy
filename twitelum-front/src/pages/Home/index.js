@@ -20,13 +20,25 @@ class Home extends Component {
         this.adicionaTweet = this.adicionaTweet.bind(this)
     }
 
+    componentWillMount(){
+        
+        window.store.subscribe(() => {
+            console.log('roda qnd tem dispatch')
+            this.setState({
+                tweets: window.store.getState()
+            })
+        })
+    }
+
     componentDidMount() {
         fetch(`http://localhost:3001/tweets?X-AUTH-TOKEN=${localStorage.getItem('TOKEN')}`)
             .then((res) => res.json())
-            .then((tweets) => {
-                this.setState({
-                    tweets
-                })
+            .then((tweetsServer) => {
+
+                window.store.dispatch({ type: 'CARREGA_TWEETS', tweets: tweetsServer })
+                /* this.setState({
+                     tweetsServer
+                 })*/
             })
 
     }
@@ -91,21 +103,21 @@ class Home extends Component {
     abreModal = (idTweet, event) => {
         //  console.log('id', idTweet)
         const ignoraModal = event.target.closest('.ignoraModal')
-       // console.log(ignoraModal)
-        if (!ignoraModal){
-        const tweetAtivo = this.state
-            .tweets
-            .find((tweetAtual) => tweetAtual._id === idTweet)
-        //    console.log(tweetAtivo)
-        this.setState({
-            tweetAtivo: tweetAtivo
-        })
-    }
+        // console.log(ignoraModal)
+        if (!ignoraModal) {
+            const tweetAtivo = this.state
+                .tweets
+                .find((tweetAtual) => tweetAtual._id === idTweet)
+            //    console.log(tweetAtivo)
+            this.setState({
+                tweetAtivo: tweetAtivo
+            })
+        }
     }
 
-    fechaModal=(event)=>{
+    fechaModal = (event) => {
         const isModal = event.target.classList.contains('modal')
-        if(isModal){
+        if (isModal) {
             this.setState({
                 tweetAtivo: {}
             })
@@ -178,16 +190,16 @@ class Home extends Component {
                 </div>
 
 
-                
-                    <Modal isOpen={this.state.tweetAtivo._id} fechaModal={this.fechaModal}>
-                        <Widget>
-                            <Tweet
-                                texto={this.state.tweetAtivo.conteudo || ''}
-                                tweetInfo={this.state.tweetAtivo}
-                                handleRemove={() => { this.removeTweet(this.state.tweetAtivo._id) }}
-                            />
-                        </Widget>
-                    </Modal>               
+
+                <Modal isOpen={this.state.tweetAtivo._id} fechaModal={this.fechaModal}>
+                    <Widget>
+                        <Tweet
+                            texto={this.state.tweetAtivo.conteudo || ''}
+                            tweetInfo={this.state.tweetAtivo}
+                            handleRemove={() => { this.removeTweet(this.state.tweetAtivo._id) }}
+                        />
+                    </Widget>
+                </Modal>
 
 
             </Fragment >

@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+
+
 // CSS Global
 import './assets/css/reset.css'
 import './assets/css/container.css'
@@ -14,7 +16,8 @@ import './assets/css/novoTweet.css'
 import { BrowserRouter } from 'react-router-dom'
 import Roteamento from './routes'
 
-
+//Coisas do Redux
+import './store'
 
 ReactDOM.render(
     <BrowserRouter>
