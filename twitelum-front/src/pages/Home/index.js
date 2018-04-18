@@ -4,7 +4,8 @@ import NavMenu from '../../components/NavMenu'
 import Dashboard from '../../components/Dashboard'
 import Widget from '../../components/Widget'
 import TrendsArea from '../../components/TrendsArea'
-import Tweet from '../../components/Tweet'
+//import Tweet from '../../components/Tweet'
+import Tweet from '../../containers/TweetPadrao'
 import Modal from '../../components/Modal'
 
 import Proptypes from 'prop-types'
@@ -66,7 +67,7 @@ class Home extends Component {
         })
     }
 
-    removeTweet = (idTweet) => {
+    //removeTweet = (idTweet) => {
 
 /*        const tweetsAtualizados = this.state.tweets.filter((tweetsAtual) => {
             return tweetsAtual._id !== idTweet
@@ -76,8 +77,8 @@ class Home extends Component {
             tweets: tweetsAtualizados
         })*/
 
-        this.context.store.dispatch(TweetsAPI.remove(idTweet))
-    }
+      //  this.context.store.dispatch(TweetsAPI.remove(idTweet))
+   // }
 
     abreModal = (idTweet, event) => {
         //  console.log('id', idTweet)
@@ -156,7 +157,7 @@ class Home extends Component {
                                         key={tweetInfo._id}
                                         texto={tweetInfo.conteudo}
                                         tweetInfo={tweetInfo}
-                                        handleRemove={() => this.removeTweet(tweetInfo._id)}
+                                    //    handleRemove={() => this.removeTweet(tweetInfo._id)}
                                         handleModal={(event) => this.abreModal(tweetInfo._id, event)}
 
                                     />
