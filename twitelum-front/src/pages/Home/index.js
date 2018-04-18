@@ -68,26 +68,15 @@ class Home extends Component {
 
     removeTweet = (idTweet) => {
 
-        const tweetsAtualizados = this.state.tweets.filter((tweetsAtual) => {
+/*        const tweetsAtualizados = this.state.tweets.filter((tweetsAtual) => {
             return tweetsAtual._id !== idTweet
         })
 
         this.setState({
             tweets: tweetsAtualizados
-        })
+        })*/
 
-        fetch(`http://localhost:3001/tweets/${idTweet}?X-AUTH-TOKEN=${localStorage.getItem('TOKEN')}`,
-            {
-                method: 'DELETE'
-            })
-            .then((res) => res.json())
-            .then((resPronto) => {
-                const tweetsAtualizados = this
-                    .state.tweets.filter((tweetAtual) => tweetAtual._id !== idTweet)
-                this.setState({
-                    tweets: tweetsAtualizados
-                })
-            })
+        this.context.store.dispatch(TweetsAPI.remove(idTweet))
     }
 
     abreModal = (idTweet, event) => {

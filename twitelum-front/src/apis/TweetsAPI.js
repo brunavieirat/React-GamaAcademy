@@ -39,3 +39,23 @@ export const adiciona = (novoTweet) =>{
     }
 
 }
+
+
+
+
+export const remove = (idTweet) =>{
+
+    return (dispatch) => {
+
+    fetch(`http://localhost:3001/tweets/${idTweet}?X-AUTH-TOKEN=${localStorage.getItem('TOKEN')}`,
+            {
+                method: 'DELETE'
+            })
+            .then((res) => res.json())
+            .then((resPronto) => {
+              dispatch({ type: 'REMOVE_TWEET', idTweet: idTweet})
+
+             console.log('teste dispatch remover')
+            })
+        }
+}
