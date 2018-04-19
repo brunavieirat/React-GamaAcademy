@@ -187,7 +187,9 @@ class Home extends Component {
                 
                 {
                   this.context.store.getState().notificacao  &&             
-                <div className="notificacaoMsg">
+                <div className="notificacaoMsg"
+                onAnimationEnd={ () => this.context.store.dispatch({ type: 'REMOVE_NOTIFICACAO'})} >
+                
                     {this.context.store.getState().notificacao}
                 </div>
                 }
