@@ -36,8 +36,8 @@ class Home extends Component {
         this.context.store.subscribe(() => {
             console.log('roda qnd tem dispatch')
             this.setState({
-                tweets: this.context.store.getState().lista,
-                tweetAtivo: this.context.store.getState().tweetAtivo
+                tweets: this.context.store.getState().tweets.lista,
+                tweetAtivo: this.context.store.getState().tweets.tweetAtivo
             })
         })
     }
@@ -184,8 +184,14 @@ class Home extends Component {
                         />
                     </Widget>
                 </Modal>
-
-
+                
+                {
+                  this.context.store.getState().notificacao  &&             
+                <div className="notificacaoMsg">
+                    {this.context.store.getState().notificacao}
+                </div>
+                }
+                
             </Fragment >
         );
     }

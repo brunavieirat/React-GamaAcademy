@@ -52,6 +52,7 @@ export const remove = (idTweet) => {
             .then((resPronto) => {
                 dispatch({ type: 'REMOVE_TWEET', idTweet: idTweet })
                 dispatch({ type: 'REMOVE_TWEET_ATIVO' })
+                dispatch({ type: 'ADD_NOTIFICACAO', msg: 'Removi o amiguinho' })
 
                 console.log('teste dispatch remover')
             })
@@ -68,5 +69,6 @@ export const like = (idTweet) => {
         //.then(res => console.log(res))
 
         dispatch({ type: 'LIKE_TWEET', idTweet })
+        dispatch({ type: 'ADD_NOTIFICACAO', msg: 'ooooooiiii notificacao' })
     }
 }

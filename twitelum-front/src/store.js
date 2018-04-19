@@ -1,6 +1,6 @@
 //npm install redux
 
-import { createStore, applyMiddleware } from 'redux'
+import { createStore, applyMiddleware, combineReducers } from 'redux'
 import thunk from 'redux-thunk'
 
 function tweetsReducer(state={ lista:[], tweetAtivo:{} }, action= {}){
@@ -87,6 +87,8 @@ function tweetsReducer(state={ lista:[], tweetAtivo:{} }, action= {}){
             tweetAtual.totalLikes = likeado ? totalLikes-1 : totalLikes+1
               
         }
+
+        
     
         return tweetAtual
     })
@@ -106,9 +108,29 @@ function tweetsReducer(state={ lista:[], tweetAtivo:{} }, action= {}){
 
 }
 
+function notificacoesReducers(state = '', action ={}){
+
+    if(action.type === 'ADD_NOTIFICACAO'){
+        const novoEstado = action.msg
+        
+        return novoEstado
+    }
+
+    if(action.type === 'REMOVE_NOTIFICACAO'){
+        const novoEstado = ''
+        
+        return novoEstado
+    }
+
+    return state
+}
+
 const store = createStore(  
+    combineReducers({
+        tweets: tweetsReducer,
+        notificacao: notificacoesReducers
+    }),
     
-    tweetsReducer,
     applyMiddleware(
         thunk
     )
