@@ -3,12 +3,14 @@
 import { createStore, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
 
-function tweetsReducer(state = [], action= {}){
+function tweetsReducer(state={ lista:[], tweetAtivo:{} }, action= {}){
   //  console.log(action)
 
     if(action.type === 'CARREGA_TWEETS'){
         
-        const novoEstado = action.tweets
+        const novoEstado = { ...state,
+             lista:action.tweets
+        }
         return novoEstado
     }
 
@@ -16,7 +18,9 @@ function tweetsReducer(state = [], action= {}){
         
      //   console.warn('oq ta acontecendo', action.type, state)
 
-        const novoEstado = [action.novoTweet, ...state]
+        const novoEstado ={ ...state,
+            lista: [action.novoTweet, ...state.lista]
+        }
         return novoEstado
     }
 
@@ -25,7 +29,11 @@ function tweetsReducer(state = [], action= {}){
         
        // console.warn('oq ta REMOVENDO', state)
        // console.log(action.tweets)
-        const novoEstado = state.filter((tweetAtual)=> tweetAtual._id !== action.idTweet)
+        const novoEstado ={
+            ...state,
+             lista: state.lista.filter((tweetAtual)=> tweetAtual._id !== action.idTweet),
+            
+            }
         
        return novoEstado
 
@@ -41,6 +49,57 @@ function tweetsReducer(state = [], action= {}){
         return novoEstado */
        // console.log(tweetsAtualizados)
     }
+
+    if(action.type === 'ADD_TWEET_ATIVO'){
+        
+            const tweetAtivo = state.lista
+                  .find((tweetAtual) => tweetAtual._id === action.idTweet)
+        
+
+        const novoEstado = {
+            ...state,
+            tweetAtivo: tweetAtivo
+        }
+
+        return novoEstado
+
+    }
+
+    if(action.type === 'REMOVE_TWEET_ATIVO'){
+    
+        return{
+            ...state,
+            tweetAtivo: {}
+        }
+    
+    }
+
+    if(action.type === 'LIKE_TWEET'){
+       
+       console.log(action)
+
+       const tweetsAtualizados = state.lista.map((tweetAtual) => {
+          if(tweetAtual._id === action.idTweet ){
+
+            const { likeado, totalLikes } = tweetAtual
+
+            tweetAtual.likeado = !likeado
+            tweetAtual.totalLikes = likeado ? totalLikes-1 : totalLikes+1
+              
+        }
+    
+        return tweetAtual
+    })
+
+    return {
+
+        ...state,
+        lista: tweetsAtualizados 
+
+    
+    }
+}
+
 
 
     return state

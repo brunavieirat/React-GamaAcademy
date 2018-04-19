@@ -36,7 +36,8 @@ class Home extends Component {
         this.context.store.subscribe(() => {
             console.log('roda qnd tem dispatch')
             this.setState({
-                tweets: this.context.store.getState()
+                tweets: this.context.store.getState().lista,
+                tweetAtivo: this.context.store.getState().tweetAtivo
             })
         })
     }
@@ -84,23 +85,26 @@ class Home extends Component {
         //  console.log('id', idTweet)
         const ignoraModal = event.target.closest('.ignoraModal')
         // console.log(ignoraModal)
+
         if (!ignoraModal) {
-            const tweetAtivo = this.state
-                .tweets
-                .find((tweetAtual) => tweetAtual._id === idTweet)
+
+                this.context.store.dispatch({ type: 'ADD_TWEET_ATIVO', idTweet })
+        
             //    console.log(tweetAtivo)
-            this.setState({
+          /*  this.setState({
                 tweetAtivo: tweetAtivo
-            })
+            })*/
         }
     }
 
     fechaModal = (event) => {
         const isModal = event.target.classList.contains('modal')
         if (isModal) {
-            this.setState({
-                tweetAtivo: {}
-            })
+            //this.setState({
+              //  tweetAtivo: {}
+            //})
+
+            this.context.store.dispatch({ type: 'REMOVE_TWEET_ATIVO'})
         }
     }
 
