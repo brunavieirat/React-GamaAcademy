@@ -1,4 +1,4 @@
-# react-GamaAcademy
+# react-GamaAcademy - Squad Accenture
 Curso React Academy da Gama em parceria com a Caelum
 
 
