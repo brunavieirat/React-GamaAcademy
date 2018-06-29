@@ -13,6 +13,7 @@ class Home extends Component {
         this.state = {
             novoTweet: '',
             tweets: [],
+            buscaTweets: [],
             login: localStorage.getItem('LOGIN'),
             tweetAtivo: {}
         }
@@ -21,14 +22,17 @@ class Home extends Component {
     }
 
     componentDidMount() {
+
+
         fetch(`http://localhost:3001/tweets?X-AUTH-TOKEN=${localStorage.getItem('TOKEN')}`)
             .then((res) => res.json())
             .then((tweets) => {
                 this.setState({
-                    tweets
+                    tweets,
+                    buscaTweets: tweets
                 })
             })
-
+        
     }
 
     pegaValorInput = (event) => {
@@ -55,6 +59,7 @@ class Home extends Component {
 
                 this.setState({
                     tweets: [tweetPronto, ...this.state.tweets],
+                    buscaTweets: [tweetPronto, ...this.state.tweets],
                     novoTweet: ''
 
                 })
@@ -64,6 +69,41 @@ class Home extends Component {
 
     }
 
+    buscaTweet = (textoTweet) => {
+
+        const filtroTweet = this.state.tweets.filter((tweet) => {
+            return  tweet.conteudo.indexOf(textoTweet) !== -1
+        })
+
+      //  console.log(filtroTweet)
+        this.setState({
+            buscaTweets: filtroTweet
+        })
+
+    //     var str = "Hello world, welcome to the universe.";
+    // var n = str.includes("world");
+    // document.getElementById("demo").innerHTML = n;
+
+    }
+
+    handleChange = (e) =>{
+        const texto = e.target.value
+
+        if(!texto){
+           
+            this.setState({
+                buscaTweets: this.state.tweets
+            })
+            
+        }
+        else{
+            this.buscaTweet(texto)
+        }
+
+        //console.log(this.state.tweets)
+        //console.log('busca '+this.state.buscaTweets)
+    }
+
     removeTweet = (idTweet) => {
 
         const tweetsAtualizados = this.state.tweets.filter((tweetsAtual) => {
@@ -71,7 +111,8 @@ class Home extends Component {
         })
 
         this.setState({
-            tweets: tweetsAtualizados
+            tweets: tweetsAtualizados,
+            buscaTweets: tweetsAtualizados
         })
 
         fetch(`http://localhost:3001/tweets/${idTweet}?X-AUTH-TOKEN=${localStorage.getItem('TOKEN')}`,
@@ -83,7 +124,8 @@ class Home extends Component {
                 const tweetsAtualizados = this
                     .state.tweets.filter((tweetAtual) => tweetAtual._id !== idTweet)
                 this.setState({
-                    tweets: tweetsAtualizados
+                    tweets: tweetsAtualizados,
+                    buscaTweets: tweetsAtualizados
                 })
             })
     }
@@ -91,21 +133,21 @@ class Home extends Component {
     abreModal = (idTweet, event) => {
         //  console.log('id', idTweet)
         const ignoraModal = event.target.closest('.ignoraModal')
-       // console.log(ignoraModal)
-        if (!ignoraModal){
-        const tweetAtivo = this.state
-            .tweets
-            .find((tweetAtual) => tweetAtual._id === idTweet)
-        //    console.log(tweetAtivo)
-        this.setState({
-            tweetAtivo: tweetAtivo
-        })
-    }
+        // console.log(ignoraModal)
+        if (!ignoraModal) {
+            const tweetAtivo = this.state
+                .tweets
+                .find((tweetAtual) => tweetAtual._id === idTweet)
+            //    console.log(tweetAtivo)
+            this.setState({
+                tweetAtivo: tweetAtivo
+            })
+        }
     }
 
-    fechaModal=(event)=>{
+    fechaModal = (event) => {
         const isModal = event.target.classList.contains('modal')
-        if(isModal){
+        if (isModal) {
             this.setState({
                 tweetAtivo: {}
             })
@@ -150,6 +192,9 @@ class Home extends Component {
                         </Widget>
                     </Dashboard>
                     <Dashboard posicao="centro">
+
+                    <input type="texto" onChange={this.handleChange} />
+
                         <Widget>
                             <div className="tweetsArea">
 
@@ -158,8 +203,7 @@ class Home extends Component {
                                     <div> Compartilhe seu primeiro Tweet </div> : false}
 
 
-
-                                {this.state.tweets.map((tweetInfo) => {
+                                {this.state.buscaTweets.map((tweetInfo) => {
 
                                     return <Tweet
                                         key={tweetInfo._id}
@@ -170,6 +214,7 @@ class Home extends Component {
 
                                     />
                                 }
+                               
                                 )}
 
                             </div>
@@ -178,16 +223,16 @@ class Home extends Component {
                 </div>
 
 
-                
-                    <Modal isOpen={this.state.tweetAtivo._id} fechaModal={this.fechaModal}>
-                        <Widget>
-                            <Tweet
-                                texto={this.state.tweetAtivo.conteudo || ''}
-                                tweetInfo={this.state.tweetAtivo}
-                                handleRemove={() => { this.removeTweet(this.state.tweetAtivo._id) }}
-                            />
-                        </Widget>
-                    </Modal>               
+
+                <Modal isOpen={this.state.tweetAtivo._id} fechaModal={this.fechaModal}>
+                    <Widget>
+                        <Tweet
+                            texto={this.state.tweetAtivo.conteudo || ''}
+                            tweetInfo={this.state.tweetAtivo}
+                            handleRemove={() => { this.removeTweet(this.state.tweetAtivo._id) }}
+                        />
+                    </Widget>
+                </Modal>
 
 
             </Fragment >
